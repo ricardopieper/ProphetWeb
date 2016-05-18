@@ -1,0 +1,58 @@
+﻿<div class="row">
+    <div class="col s12">
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="engine in vm.engines">
+                    <td>{{engine.name}}</td>
+                    <td>{{engine.description}}</td>
+                    <td>{{engine.location}}</td>
+                    <td>
+                        <a href="/#/engines/edit/{{engine.engine_id}}" class="waves-effect waves-circle btn-floating">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <button ph-modal="#modalDelete" ng-click="vm.askDelete(engine)" 
+                                class="waves-effect waves-circle btn-floating red darken-1">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-hide="vm.engines.length">
+                <tr colspan="5">
+                    <td colspan="5">
+                        No data
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <a href="/#/engines/new" class="waves-effect waves-light btn">
+                            <i class="material-icons left">add</i>
+                            New Digester
+                        </a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div id="modalDelete" class="modal">
+    <div class="modal-content">
+        <h4>Delete Digester '{{vm.engineToDelete.name}}'</h4>
+        <p>Are you sure you want to delete the engine?</p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="vm.confirmDelete()" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Agree</a>
+        <button class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Cancel</button>
+    </div>
+</div>

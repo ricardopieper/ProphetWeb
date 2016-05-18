@@ -1,0 +1,22 @@
+{
+  "name": "prophet-web",
+  "description": "ProphetWeb",
+  "main": "",
+  "authors": [
+    "[object Object]"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-material": "^1.0.8",
+    "angular": "^1.5.5",
+    "bootstrap": "^3.3.6"
+  }
+}

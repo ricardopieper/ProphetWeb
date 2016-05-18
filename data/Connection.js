@@ -1,0 +1,1 @@
+﻿module.exports = { contactPoints: ['localhost:9042'], keyspace: 'prophet' }

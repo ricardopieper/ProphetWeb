@@ -1,0 +1,39 @@
+﻿<form ng-submit="vm.save()">
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="name" placeholder="Name (eg. Digester SETREM 01)" ng-model="vm.digester.name" type="text" class="validate">
+            <label for="name" class="{{vm.labelclass}}">Name</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="location" placeholder="Location (eg. Campus SETREM TM)" ng-model="vm.digester.location" type="text" class="validate">
+            <label for="location" class="{{vm.labelclass}}">Location</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="owner" placeholder="Owner" ng-model="vm.digester.owner" type="text" class="validate">
+            <label for="owner" class="{{vm.labelclass}}">Owner</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <textarea id="description" ng-model="vm.digester.description" class="materialize-textarea"></textarea>
+            <label for="description" class="{{vm.labelclass}}">Description</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <a href="/#/digesters/list" class="btn waves-effect white waves-light blue-text" type="submit" name="action">
+                Discard
+            </a>
+            <button class="btn waves-effect waves-light" type="submit" name="action">
+                Save
+                <i class="material-icons left">send</i>
+            </button>
+        </div>
+    </div>
+
+</form>

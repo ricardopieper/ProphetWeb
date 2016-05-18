@@ -1,0 +1,33 @@
+﻿@media only screen and (min-width: 601px) {
+    main div.container {
+        padding-left: 0px;
+    }
+}
+
+@media only screen and (min-width: 993px) {
+    main div.container {
+        padding-left: 120px;
+    }
+}
+
+h4.header {
+    color: #e57373;
+}
+
+header ul li.top .header {
+    padding: 0 26px;
+    font-size: 36px;
+    height: 64px;
+    line-height: 64px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+    header ul li.top .header small {
+        font-size: 10px;
+        margin-left: 10px;
+    }
+
+#nav-mobile li a {
+    height: 48px;
+    line-height: 48px;
+}

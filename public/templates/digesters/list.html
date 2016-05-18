@@ -1,0 +1,60 @@
+﻿<div class="row">
+    <div class="col s12">
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Owner</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="digester in vm.digesters">
+                    <td>{{digester.name}}</td>
+                    <td>{{digester.description}}</td>
+                    <td>{{digester.location}}</td>
+                    <td>{{digester.owner}}</td>
+                    <td>
+                        <a href="/#/digesters/edit/{{digester.digester_id}}" class="waves-effect waves-circle btn-floating">
+                            <i class="material-icons">edit</i>
+                        </a>
+                        <button ph-modal="#modalDelete" ng-click="vm.askDelete(digester)" 
+                                class="waves-effect waves-circle btn-floating red darken-1">
+                            <i class="material-icons">delete</i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-hide="vm.digesters.length">
+                <tr colspan="5">
+                    <td colspan="5">
+                        No data
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <a href="/#/digesters/new" class="waves-effect waves-light btn">
+                            <i class="material-icons left">add</i>
+                            New Digester
+                        </a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>
+
+<div id="modalDelete" class="modal">
+    <div class="modal-content">
+        <h4>Delete Digester '{{vm.digesterToDelete.name}}'</h4>
+        <p>Are you sure you want to delete the digester?</p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="vm.confirmDelete()" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Agree</a>
+        <button class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Cancel</button>
+    </div>
+</div>

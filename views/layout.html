@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/icon?family=Material+Icons" />
+
+    <link type="text/css" rel="stylesheet" href="/materialize/css/materialize.min.css" media="screen,projection" />
+    <link type="text/css" rel="stylesheet" href="/stylesheets/styles.css" />
+
+    <script src="/components/angular/angular.js" type="text/javascript"></script>
+    <script src="/components/angular-ui-router/release/angular-ui-router.js" type="text/javascript"></script>
+    <script src="/components/jquery/dist/jquery.js" type="text/javascript"></script>
+    <script src="/materialize/js/materialize.js" type="text/javascript"></script>
+   
+     <script src="/javascripts/app.js" type="text/javascript"></script>
+    
+    <script src="/javascripts/controllers/digesters.js" type="text/javascript"></script>
+    <script src="/javascripts/services/digesters.js" type="text/javascript"></script>
+    <script src="/javascripts/states/digesters.js" type="text/javascript"></script>
+
+    <script src="/javascripts/controllers/engines.js" type="text/javascript"></script>
+    <script src="/javascripts/services/engines.js" type="text/javascript"></script>
+    <script src="/javascripts/states/engines.js" type="text/javascript"></script>
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body ng-app="ProphetWeb">
+    <header>
+        <nav role="navigation">
+            <div class="nav-wrapper container">
+                <ul class="right hide-on-med-and-down nav-mobile">
+                    <li><a href="/#/digesters/list" class="waves-effect waves-teal">Digesters</a></li>
+                    <li><a href="/#/engines/list" class="waves-effect waves-teal">Engines</a></li>
+                    <li><a href="#" class="waves-effect waves-teal">Data</a></li>
+                    <li><a href="#" class="waves-effect waves-teal">Learning</a></li>
+                </ul>
+                <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+                <a href="#" data-activates="nav-mobile" class=""><i class="material-icons">more_vert</i></a>
+            </div>
+        </nav>
+        <ul id="nav-mobile" class="side-nav fixed">
+            <li class="top">
+                <div class="header">Prophet<small>v0.1beta</small></div>
+            </li>
+            <li class="bold"><a href="/#/digesters/list" class="waves-effect waves-teal">Digesters</a></li>
+            <li class="bold"><a href="/#/engines/list" class="waves-effect waves-teal">Engines</a></li>
+            <li class="bold"><a href="#" class="waves-effect waves-teal">Data</a></li>
+            <li class="bold"><a href="#" class="waves-effect waves-teal">Learning</a></li>
+        </ul>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <%- body %>
+                <ui-view></ui-view>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
+
