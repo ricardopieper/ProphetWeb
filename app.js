@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 var dbtype = "cassandra";
 
 
-console.log(dbtype);
 
 if (dbtype == "cassandra") {
 
@@ -21,22 +20,57 @@ if (dbtype == "cassandra") {
     var query = "select table_name from system_schema.tables where keyspace_name = 'prophet';";
     
     client.execute(query, [], { prepare: false }, function(err, data) {
-        
-       console.log(err, data);
-        
+    
        var tables = data.rows.map(x => x.table_name);
        
-       if (!tables || !tables.length){
+       if (!tables || !tables.length)
+       {
+          
+           console.log("Criando keyspace...");    
+           
            var fs = require('fs');
-           
+
            fs.readFile('./data/cassandra/schema.sql', 'utf8', function(err, data){
-           
-               client.execute(data, [], { prepare: true }, function(err,data){
-                   console.log("err: "+err);
-                   console.log("data: "+data);
-               });
-           
-           })
+                
+               var sqls = data
+                    .replace("\n", "")
+                    .replace("\r", "")
+                    .replace("\t", "")
+                    .split(";")
+                    .filter(x=> x != "")
+                    .map(x => {
+                         return { 
+                             query: x.trim(), 
+                             params: [] 
+                         }; 
+                    })
+                    .map(x=>x.query);
+               
+               console.log(sqls);
+               
+               function executeAll(arr){
+                   
+                   var nexts = arr.splice(1);
+                   
+                   var current = arr[0];
+                   console.log("Executando "+current);
+                   client.execute(current, [], { prepare: true }, function(err1){
+                        if (err1) {
+                            console.log("Erro: "+err1);
+                        } else {
+                            console.log("Sucesso");
+                            if (nexts && nexts.length){
+                                executeAll(nexts);
+                            }
+                        }      
+                    });
+                   
+               }
+               
+              executeAll(sqls);
+               
+           });
+        
        }
        
     });
@@ -50,12 +84,11 @@ if (dbtype == "cassandra") {
 
 //var mongoose = require('mongoose');
 
-/*
+
 var routes = require('./routes/index');
-var users = require('./routes/users');
 var digesters = require('./routes/digesters');
 var engines = require('./routes/engines');
-*/
+
 
 
 
@@ -79,12 +112,10 @@ app.use(require('stylus').middleware(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-/*
 app.use('/', routes);
-app.use('/users', users);
 app.use('/digesters', digesters);
 app.use('/engines', engines);
-*/
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
     var err = new Error('Not Found');
