@@ -2,7 +2,17 @@
 var router = express.Router();
 var Model = require('../data/cassandra/Model');
 var multer = require('multer');
-var upload = multer();
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, 'tmp/upload')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + '-' + Date.now())
+  }
+})
+
+var upload = multer({ storage: storage });
 
 var returnJson = (req, res, next) => (err, data) => {
     if (err) return next(err);
@@ -42,7 +52,8 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/upload', upload.single('file'), function (req, res, next) {
-    Model.find(returnJson(req, res, next));
+    if (err) return next(err);
+    res.json({});
 });
 
 module.exports = router;

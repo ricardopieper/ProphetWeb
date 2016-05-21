@@ -57,7 +57,7 @@ app.controller('ModelsController',
             };
 
             this.askUpload = function (model) {
-                this.modelToDelete = model;
+                this.modelToUpload = model;
                 $('#modalUpload').openModal();
             }
 
