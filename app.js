@@ -88,6 +88,7 @@ if (dbtype == "cassandra") {
 var routes = require('./routes/index');
 var digesters = require('./routes/digesters');
 var engines = require('./routes/engines');
+var models = require('./routes/models');
 
 
 
@@ -115,6 +116,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', routes);
 app.use('/digesters', digesters);
 app.use('/engines', engines);
+app.use('/models', models);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

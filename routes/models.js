@@ -1,42 +1,42 @@
 ﻿var express = require('express');
 var router = express.Router();
-var Engine = require('../data/cassandra/Engine');
+var Model = require('../data/cassandra/Model');
 
 var returnJson = (req, res, next) => (err, data) => {
     if (err) return next(err);
     res.json(data);
 }
 
-router.param('engine', (req, res, next, id) => {
+router.param('model', (req, res, next, id) => {
 
-    var query = Engine.findById(id);
+    var query = Model.findById(id);
 
-    query.exec((err, engine) => {
+    query.exec((err, model) => {
         if (err) return next(err);
 
-        if (!engine) return next(new Error('can\'t find engine'));
+        if (!model) return next(new Error('can\'t find model'));
 
-        req.engine = engine;
+        req.model = model;
 
         return next();
     });
 });
 
 router.post('/', (req, res, next) => {
-    var engine = new Engine(req.body);
-    engine.save(returnJson(req, res, next));
+    var model = new Model(req.body);
+    model.save(returnJson(req, res, next));
 });
 
-router.delete('/:engine', (req, res, next) => {
-    new Engine(req.engine).delete(returnJson(req, res, next));
+router.delete('/:model', (req, res, next) => {
+    new Model(req.model).delete(returnJson(req, res, next));
 });
 
-
-router.get('/:engine', (req, res, next) => {
-    res.json(req.engine);
+router.get('/:model', (req, res, next) => {
+    res.json(req.model);
 });
+
 router.get('/', function (req, res, next) {
-    Engine.find(returnJson(req, res, next));
+    Model.find(returnJson(req, res, next));
 });
 
 module.exports = router;

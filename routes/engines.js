@@ -35,8 +35,15 @@ router.delete('/:engine', (req, res, next) => {
 router.get('/:engine', (req, res, next) => {
     res.json(req.engine);
 });
+
 router.get('/', function (req, res, next) {
     Engine.find(returnJson(req, res, next));
+});
+
+router.get('/:engine/models', (req, res, next) => {
+    var id = req.engine.engine_id;
+    var query = Model.findEngineModels(id);
+    query.exec(returnJson(req, res, next));
 });
 
 module.exports = router;

@@ -4,21 +4,21 @@
             <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Description</th>
-                    <th>Location</th>
+                    <th>Input Variables</th>
+                    <th>Output Variable</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="engine in vm.engines">
+                <tr ng-repeat="model in vm.models">
                     <td>{{engine.name}}</td>
-                    <td>{{engine.description}}</td>
-                    <td>{{engine.location}}</td>
+                    <td>{{engine.inputVarsDesc}}</td>
+                    <td>{{engine.outputVar}}</td>
                     <td>
-                        <a href="/#/engines/edit/{{engine.engine_id}}" class="waves-effect waves-circle btn-floating">
+                        <a href="/#/model/edit/{{model.model_id}}" class="waves-effect waves-circle btn-floating">
                             <i class="material-icons">edit</i>
                         </a>
-                        <button ph-modal="#modalDelete" ng-click="vm.askDelete(engine)" 
+                        <button ph-modal="#modalDelete" ng-click="vm.askDelete(model)" 
                                 class="waves-effect waves-circle btn-floating red darken-1">
                             <i class="material-icons">delete</i>
                         </button>
@@ -48,8 +48,8 @@
 
 <div id="modalDelete" class="modal">
     <div class="modal-content">
-        <h4>Delete Engine '{{vm.engineToDelete.name}}'</h4>
-        <p>Are you sure you want to delete the engine?</p>
+        <h4>Delete model '{{vm.modelToDelete.name}}'</h4>
+        <p>Are you sure you want to delete the model?</p>
     </div>
     <div class="modal-footer">
         <a ng-click="vm.confirmDelete()" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Agree</a>

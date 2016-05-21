@@ -1,0 +1,55 @@
+﻿<form ng-submit="vm.save()">
+<!--
+    name text,
+	inputVars list<text>
+	outputVar text
+    
+-->
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="name" placeholder="Name (eg. Cattle Manure)" ng-model="vm.model.name" type="text" class="validate">
+            <label for="name" class="{{vm.labelclass}}">Name</label>
+        </div>
+    </div>
+     <div class="row">
+        <div class="input-field col s12">
+            <select multiple id="inputVars" ng-model="vm.model.inputVars">
+                <option value="" disabled selected>Select the input variables to calculate:</option>
+                <option value="temp1">Temperature Top</option> 
+                <option value="temp2">Temperature Middle</option> 
+                <option value="temp3">Temperature Bottom</option> 
+                <option value="tempOut">Temperature Outside</option> 
+                <option value="pH">pH</option> 
+                <option value="pressure">Pressure</option> 
+                <option value="retentionTime">Retention Time</option>
+                <option value="substrateConcentration">Substrate Concentration (g/liter)</option> 
+                <option value="engineSpeed">Engine Speed</option>
+            </select>
+            <label for="inputVars" class="{{vm.labelclass}}">Input Variables</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <select id="outputVar" ng-model="vm.model.outputVar">
+                <option value="" disabled selected>Select the output variable:</option>
+                <option value="biogasml">Biogas Production (ml)</option> 
+                <option value="ch4ml">CH4 Methane Production (ml)</option> 
+                <option value="co2ml">CO2 Carbon Dioxide Production (ml)</option> 
+                <option value="energy">Energy Production</option> 
+            </select>
+            <label for="outputVar" class="{{vm.labelclass}}">Output Variable</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <a href="/#/engines/list" class="btn waves-effect white waves-light blue-text" type="submit" name="action">
+                Discard
+            </a>
+            <button class="btn waves-effect waves-light" type="submit" name="action">
+                Save
+                <i class="material-icons left">send</i>
+            </button>
+        </div>
+    </div>
+
+</form>
