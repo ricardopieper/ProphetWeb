@@ -11,11 +11,11 @@
             </thead>
             <tbody>
                 <tr ng-repeat="model in vm.models">
-                    <td>{{engine.name}}</td>
-                    <td>{{engine.inputVarsDesc}}</td>
-                    <td>{{engine.outputVar}}</td>
+                    <td>{{model.name}}</td>
+                    <td>{{model.inputVarsDesc}}</td>
+                    <td>{{model.outputVar}}</td>
                     <td>
-                        <a href="/#/model/edit/{{model.model_id}}" class="waves-effect waves-circle btn-floating">
+                        <a href="/#/models/edit/{{model.model_id}}" class="waves-effect waves-circle btn-floating">
                             <i class="material-icons">edit</i>
                         </a>
                         <button ph-modal="#modalDelete" ng-click="vm.askDelete(model)" 
@@ -25,7 +25,7 @@
                     </td>
                 </tr>
             </tbody>
-            <tbody ng-hide="vm.engines.length">
+            <tbody ng-hide="vm.model.length">
                 <tr colspan="5">
                     <td colspan="5">
                         No data
@@ -35,7 +35,7 @@
             <tfoot>
                 <tr>
                     <td colspan="5">
-                        <a href="/#/engines/new" class="waves-effect waves-light btn">
+                        <a href="/#/models/new" class="waves-effect waves-light btn">
                             <i class="material-icons left">add</i>
                             New Model
                         </a>

@@ -12,9 +12,13 @@ app.controller('EnginesController',
             this.engines = listEngines;
 
             this.save = function () {
-                EnginesService.save(engine);
-                Materialize.toast('Engine saved.', 4000)
-                $state.go('engines.list', null, { reload: true });
+                if (engine.name || engine.name.length) {
+                    EnginesService.save(engine);
+                    Materialize.toast('Engine saved.', 4000)
+                    $state.go('engines.list', {}, { reload: true });
+                } else {
+                    Materialize.toast('You must enter the name.', 4000);
+                }
             };
 
             this.askDelete = function (engine) {
@@ -26,7 +30,7 @@ app.controller('EnginesController',
                 EnginesService.delete(this.engineToDelete);
                 Materialize.toast('Engine deleted.', 4000)
                 $('#modalDelete').closeModal();
-                $state.go('engines.list', null, { reload: true });
+                $state.go('engines.list', {}, { reload: true });
                 $state.reload();
             }
 

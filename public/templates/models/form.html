@@ -1,18 +1,12 @@
 ﻿<form ng-submit="vm.save()">
-<!--
-    name text,
-	inputVars list<text>
-	outputVar text
-    
--->
     <div class="row">
         <div class="input-field col s12">
             <input id="name" placeholder="Name (eg. Cattle Manure)" ng-model="vm.model.name" type="text" class="validate">
             <label for="name" class="{{vm.labelclass}}">Name</label>
         </div>
     </div>
-     <div class="row">
-        <div class="input-field col s12">
+    <div class="row">
+       <div class="input-field col s12">
             <select multiple id="inputVars" ng-model="vm.model.inputVars">
                 <option value="" disabled selected>Select the input variables to calculate:</option>
                 <option value="temp1">Temperature Top</option> 
@@ -26,7 +20,7 @@
                 <option value="engineSpeed">Engine Speed</option>
             </select>
             <label for="inputVars" class="{{vm.labelclass}}">Input Variables</label>
-        </div>
+        </div> 
     </div>
     <div class="row">
         <div class="input-field col s12">
@@ -42,7 +36,7 @@
     </div>
     <div class="row">
         <div class="input-field col s12">
-            <a href="/#/engines/list" class="btn waves-effect white waves-light blue-text" type="submit" name="action">
+            <a href="/#/models/list" class="btn waves-effect white waves-light blue-text" type="submit" name="action">
                 Discard
             </a>
             <button class="btn waves-effect waves-light" type="submit" name="action">

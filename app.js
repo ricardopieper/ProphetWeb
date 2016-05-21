@@ -14,8 +14,10 @@ if (dbtype == "cassandra") {
 
     var cassandra = require('cassandra-driver');
     var config = require("./data/Connection");
-    config.keyspace = null;
-    var client = new cassandra.Client(config);
+
+    var client = new cassandra.Client({
+        contactPoints: config.contactPoints,
+    });
 
     var query = "select table_name from system_schema.tables where keyspace_name = 'prophet';";
     

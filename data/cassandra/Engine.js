@@ -8,22 +8,22 @@ var Engine = function (engineData) {
    
     this.save = function (callback) {
 
-        if (!engineData.engine_id) {
+        if (!this.engine_id) {
             var query = 'insert into engines (engine_id, description, location, name) values(uuid(), ?, ?, ?)';
             client.execute(query, [
-                engineData.description,
-                engineData.location,
-                engineData.name,
+                this.description,
+                this.location,
+                this.name,
             ], { prepare: true }, function (err, data) {
                 callback(err);
             });
         } else {
             var query = 'update engines set description = ?, location = ?, name = ?, where engine_id = ?';
             client.execute(query, [
-                engineData.description,
-                engineData.location,
-                engineData.name,
-                engineData.engine_id
+                this.description,
+                this.location,
+                this.name,
+                this.engine_id
             ], { prepare: true }, function (err, data) {
                 callback(err);
             });
@@ -31,10 +31,9 @@ var Engine = function (engineData) {
     }
 
     this.delete = function (callback) {
-        console.log(engineData);
         var query = 'delete from engines where engine_id = ?';
         client.execute(query, [
-            engineData.engine_id
+            this.engine_id
         ], { prepare: true }, function (err, data) {
             callback(err);
         });
@@ -44,7 +43,7 @@ var Engine = function (engineData) {
 Engine.find = function (callback) {
     var query = 'select * from engines';
     client.execute(query, [], { prepare: true }, function (err, data) {
-        callback(err, data.rows.map(x=> new Engine(x)));
+        callback(err, !data || !data.rows? []: data.rows.map(x=> new Engine(x)));
     });
 };
 Engine.findById = function (engine_id) {
@@ -52,7 +51,6 @@ Engine.findById = function (engine_id) {
         exec: function (callback) {
             var query = 'select * from engines where engine_id = ?';
             client.execute(query, [engine_id], { prepare: true }, function (err, data) {
-                console.log(data);
                 callback(err, data && data.rows && data.rows.length != 0 ? new Engine(data.rows[0]) : null);
             });
         }

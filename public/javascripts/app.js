@@ -4,13 +4,24 @@ app.config(
     [
         '$urlRouterProvider',
         function ($urlRouterProvider) {
-            $urlRouterProvider.otherwise('digesters/list');
+           // $urlRouterProvider.otherwise('digesters/list');
         }
     ]
 );
 
 app.controller('MainController', [function () { }]);
 
+app.directive('select', [function () {
+    return {
+        link: function ($scope, element, attrs) {
+            $(element).material_select();
+        }
+    };
+}]);
+
 $(function () {
     $(".button-collapse").sideNav();
+    
+   
+   
 });

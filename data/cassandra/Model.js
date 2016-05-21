@@ -43,7 +43,7 @@ var Model = function (modelData) {
 Model.find = function (callback) {
     var query = 'select * from models';
     client.execute(query, [], { prepare: true }, function (err, data) {
-        callback(err, data.rows.map(x=> new Model(x)));
+        callback(err, !data || !data.rows? []: data.rows.map(x=> new Model(x)));
     });
 };
 
@@ -52,7 +52,7 @@ Model.findDigesterModels = function (digester_id) {
         exec: function (callback) {
             var query = 'select * from digesters where digester_id = ?';
             client.execute(query, [digester_id], { prepare: true }, function (err, data) {
-                callback(err, data.rows.map(x=> new Model(x)));
+                callback(err, !data || !data.rows? []: data.rows.map(x=> new Model(x)));
             });
         }
     }
@@ -63,7 +63,7 @@ Model.findEngineModels = function (engine_id) {
         exec: function (callback) {
             var query = 'select * from models where engine_id = ?';
             client.execute(query, [engine_id], { prepare: true }, function (err, data) {
-                callback(err, data.rows.map(x=> new Model(x)));
+                callback(err, !data || !data.rows? []: data.rows.map(x=> new Model(x)));
             });
         }
     }

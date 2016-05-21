@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS models (
 	digester_id uuid,
 	engine_id uuid,
 	name text,
-	inputVars list<text>
+	inputVars list<text>,
 	outputVar text
 );
 
