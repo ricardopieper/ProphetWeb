@@ -7,31 +7,37 @@
     </div>
     <div class="row">
        <div class="input-field col s12">
-            <select multiple id="inputVars" ng-model="vm.model.inputVars">
-                <option value="" disabled selected>Select the input variables to calculate:</option>
-                <option value="temp1">Temperature Top</option> 
-                <option value="temp2">Temperature Middle</option> 
-                <option value="temp3">Temperature Bottom</option> 
-                <option value="tempOut">Temperature Outside</option> 
-                <option value="pH">pH</option> 
-                <option value="pressure">Pressure</option> 
-                <option value="retentionTime">Retention Time</option>
-                <option value="substrateConcentration">Substrate Concentration (g/liter)</option> 
-                <option value="engineSpeed">Engine Speed</option>
+            <select id="digesters" ng-model="vm.model.digester_id" material-select watch>
+                <option ng-repeat="value in vm.digesters" value="{{value.digester_id}}">{{value.name}}</option>
+                <option value="{{null}}">None</option>
             </select>
-            <label for="inputVars" class="{{vm.labelclass}}">Input Variables</label>
+            <label for="digesters" class="{{vm.labelclass}}">Digester</label>
+        </div> 
+    </div> 
+    <div class="row">
+       <div class="input-field col s12">
+            <select id="engines" ng-model="vm.model.engine_id" material-select watch>
+                <option ng-repeat="value in vm.engines" value="{{value.engine_id}}">{{value.name}}</option>
+                <option value="{{null}}">None</option>
+            </select>
+            <label for="engines" class="{{vm.labelclass}}">Engine</label>
+        </div> 
+    </div> 
+    <div class="row">
+       <div class="input-field col s12">
+            <select id="inputvars" ng-model="vm.model.inputvars" material-select multiple watch>
+                <option value="" disabled selected>Select the input variables to calculate:</option>
+                <option ng-repeat="value in vm.inputvars" value="{{value.value}}">{{value.desc}}</option>
+            </select>
+            <label for="inputvars" class="{{vm.labelclass}}">Input Variables</label>
         </div> 
     </div>
     <div class="row">
         <div class="input-field col s12">
-            <select id="outputVar" ng-model="vm.model.outputVar">
-                <option value="" disabled selected>Select the output variable:</option>
-                <option value="biogasml">Biogas Production (ml)</option> 
-                <option value="ch4ml">CH4 Methane Production (ml)</option> 
-                <option value="co2ml">CO2 Carbon Dioxide Production (ml)</option> 
-                <option value="energy">Energy Production</option> 
+            <select id="outputvar" ng-model="vm.model.outputvar" material-select  watch>
+                <option ng-repeat="value in vm.outputvars" value="{{value.value}}">{{value.desc}}</option>
             </select>
-            <label for="outputVar" class="{{vm.labelclass}}">Output Variable</label>
+            <label for="outputvar" class="{{vm.labelclass}}">Output Variable</label>
         </div>
     </div>
     <div class="row">

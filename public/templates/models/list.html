@@ -12,9 +12,13 @@
             <tbody>
                 <tr ng-repeat="model in vm.models">
                     <td>{{model.name}}</td>
-                    <td>{{model.inputVarsDesc}}</td>
-                    <td>{{model.outputVar}}</td>
+                    <td>{{model.inputvarsDesc}}</td>
+                    <td>{{model.outputvarDesc}}</td>
                     <td>
+                         <button ph-modal="#modalUpload" ng-click="vm.askUpload(model)"  
+                                class="waves-effect waves-circle btn-floating blue darken-1">
+                            <i class="material-icons">backup</i>
+                        </button>
                         <a href="/#/models/edit/{{model.model_id}}" class="waves-effect waves-circle btn-floating">
                             <i class="material-icons">edit</i>
                         </a>
@@ -22,10 +26,11 @@
                                 class="waves-effect waves-circle btn-floating red darken-1">
                             <i class="material-icons">delete</i>
                         </button>
+                       
                     </td>
                 </tr>
             </tbody>
-            <tbody ng-hide="vm.model.length">
+            <tbody ng-hide="vm.models.length">
                 <tr colspan="5">
                     <td colspan="5">
                         No data
@@ -53,6 +58,26 @@
     </div>
     <div class="modal-footer">
         <a ng-click="vm.confirmDelete()" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Agree</a>
+        <button class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Cancel</button>
+    </div>
+</div>
+
+<form id="modalUpload" class="modal" method="POST" action="/models/upload" enctype="multipart/form-data">
+    <div class="modal-content">
+        <h4>Upload file</h4>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                <input type='hidden' name="model_id" value="{{vm.model.model_id}}" />
+                <input type="file" name="file" />
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Upload</a>
         <button class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Cancel</button>
     </div>
 </div>

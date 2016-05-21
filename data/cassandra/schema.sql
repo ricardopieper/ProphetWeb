@@ -17,16 +17,9 @@ CREATE TABLE IF NOT EXISTS models (
 	model_id uuid PRIMARY KEY,
 	digester_id uuid,
 	engine_id uuid,
-	name text
-);
-
-CREATE TABLE IF NOT EXISTS models (
-	model_id uuid PRIMARY KEY,
-	digester_id uuid,
-	engine_id uuid,
 	name text,
-	inputVars list<text>,
-	outputVar text
+	inputvars list<text>,
+	outputvar text
 );
 
 CREATE TABLE IF NOT EXISTS basicmodelview (

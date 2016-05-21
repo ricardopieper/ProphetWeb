@@ -1,4 +1,4 @@
-﻿var app = angular.module('ProphetWeb', ['ui.router']);
+﻿var app = angular.module('ProphetWeb', ['ui.router', 'ui.materialize']);
 
 app.config(
     [

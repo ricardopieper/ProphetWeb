@@ -6,7 +6,7 @@ app.service('ModelsService', ['$http', function ($http) {
 
     this.get = (id) => $http.get('/models/' + id).then(x => x.data);
 
-    this.save = (engine) => $http.post('/models', engine);
+    this.save = (model) => $http.post('/models', model);
 
-    this.delete = (engine) => $http.delete('/models/'+ engine.engine_id);
+    this.delete = (model) => $http.delete('/models/'+ model.model_id);
 }]);

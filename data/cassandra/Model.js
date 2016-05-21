@@ -7,23 +7,27 @@ var Model = function (modelData) {
     meta.copy(modelData, this);
    
     this.save = function (callback) {
-
+        console.log("Model.save", modelData);
         if (!this.model_id) {
-            var query = 'insert into models (model_id, digester_id, engine_id, name) values(uuid(), ?, ?, ?)';
-            client.execute(query, [
-                this.digester_id,
-                this.engine_id,
-                this.name
-            ], { prepare: true }, function (err, data) {
-                callback(err);
-            });
-        } else {
-            var query = 'update models set digester_id = ?, engine_id = ?, name = ? where model_id = ?';
+            var query = 'insert into models (model_id, digester_id, engine_id, name, inputvars, outputvar) values(uuid(), ?, ?, ?, ?, ?)';
             client.execute(query, [
                 this.digester_id,
                 this.engine_id,
                 this.name,
-                this.model_id
+                this.inputvars,
+                this.outputvar
+            ], { prepare: true }, function (err, data) {
+                callback(err);
+            });
+        } else {
+            var query = 'update models set digester_id = ?, engine_id = ?, name = ?, inputvars = ?, outputvar = ? where model_id = ?';
+            client.execute(query, [
+                this.digester_id,
+                this.engine_id,
+                this.name,
+                this.inputvars,
+                this.outputvar,
+                this.model_id                
             ], { prepare: true }, function (err, data) {
                 callback(err);
             });
