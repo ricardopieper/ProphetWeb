@@ -6,16 +6,26 @@ var Model = function (modelData) {
 
     meta.copy(modelData, this);
    
+    this.scheduleTraining = function(callback){
+        var query = 'update models set state = 1 where model_id = ?';
+        client.execute(query, [
+            this.model_id                
+        ], { prepare: true }, function (err, data) {
+            callback(err);
+        });
+    }
+   
     this.save = function (callback) {
         console.log("Model.save", modelData);
         if (!this.model_id) {
-            var query = 'insert into models (model_id, digester_id, engine_id, name, inputvars, outputvar) values(uuid(), ?, ?, ?, ?, ?)';
+            var query = 'insert into models (model_id, digester_id, engine_id, name, inputvars, outputvar, state) values(uuid(), ?, ?, ?, ?, ?, ?)';
             client.execute(query, [
                 this.digester_id,
                 this.engine_id,
                 this.name,
                 this.inputvars,
-                this.outputvar
+                this.outputvar,
+                this.state || 0,
             ], { prepare: true }, function (err, data) {
                 callback(err);
             });

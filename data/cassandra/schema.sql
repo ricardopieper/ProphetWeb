@@ -21,6 +21,20 @@ CREATE TABLE IF NOT EXISTS models (
 	inputvars list<text>,
 	outputvar text
 );
+ALTER TABLE models ADD state int;
+ALTER TABLE models ADD trainingResult text;
+
+
+CREATE TABLE IF NOT EXISTS uploads (
+	model_id uuid,
+	upload_id uuid,
+	file text,
+	date timestamp,
+	processed boolean,
+	result text,
+	PRIMARY KEY(model_id, upload_id)
+);
+
 
 CREATE TABLE IF NOT EXISTS basicmodelview (
 	model_id uuid PRIMARY KEY,
@@ -59,9 +73,27 @@ CREATE TABLE IF NOT EXISTS modeldatasets (
 );
 
 CREATE TABLE IF NOT EXISTS modelparams(
-	modelparams_id uuid PRIMARY KEY,
 	model_id uuid,
+	modelparams_id uuid,
 	varname text,
 	data blob,
-	dimensions list<int>
+	dimensions list<int>,
+	PRIMARY KEY(model_id, modelparams_id),
 );
+
+CREATE TABLE IF NOT EXISTS modelpredictions(
+	model_id uuid,
+	prediction_id uuid,
+	inputvalues map<text, double>,
+	inputvar text,
+	fromValue double,
+	toValue double,
+	result text, 
+	state int	
+	PRIMARY KEY(model_id, prediction_id)	
+);
+
+
+
+
+

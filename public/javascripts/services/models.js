@@ -8,5 +8,7 @@ app.service('ModelsService', ['$http', function ($http) {
 
     this.save = (model) => $http.post('/models', model);
 
+    this.scheduleTraining = (model)=> $http.post('/models/train', model);
+
     this.delete = (model) => $http.delete('/models/'+ model.model_id);
 }]);

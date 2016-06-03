@@ -1,0 +1,29 @@
+﻿<div class="row">
+    <div class="col s12">
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Uploaded on</th>
+                    <th>Processed</th>
+                    <th>Status</th>
+           
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="upload in vm.uploads">
+                    <td>{{upload.date}}</td>
+                    <td>{{upload.processed}}</td>
+                    <td>{{upload.result}}</td>
+                    
+                </tr>
+            </tbody>
+            <tbody ng-hide="vm.uploads.length">
+                <tr colspan="5">
+                    <td colspan="5">
+                        No data
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

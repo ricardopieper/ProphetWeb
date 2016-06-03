@@ -32,8 +32,8 @@ app.controller('ModelsController',
                     if (model.inputvars && model.inputvars.length){
                         if (model.outputvar && model.outputvar.length){
                            
-                           var digesterSelected = model.digester_id != null;
-                           var engineSelected = model.engine_id != null;
+                           var digesterSelected = model.digester_id && model.digester_id.length;
+                           var engineSelected = model.engine_id && model.engine_id.length;
                            
                            if ((digesterSelected && engineSelected) || (!digesterSelected && !engineSelected)){
                                 
@@ -61,7 +61,6 @@ app.controller('ModelsController',
                 $('#modalUpload').openModal();
             }
 
-
             this.askDelete = function (model) {
                 this.modelToDelete = model;
                 $('#modalDelete').openModal();
@@ -75,4 +74,51 @@ app.controller('ModelsController',
                 $state.reload();
             }
 
+            this.setModelToTrain = function(model){
+                this.modelToTrain = model;
+                $('#modalTrain').openModal();
+            }
+
+            this.scheduleTraining = function() {
+                ModelsService.scheduleTraining(this.modelToTrain);
+                Materialize.toast('The model has been scheduled to be trained.', 4000)
+            }
+
         }]);
+
+app.directive('formUpload', [function(){
+    return {
+        link: function ($scope, element, attrs) {
+            $(element).submit(function(){
+
+                var formdata = new FormData(this);
+                
+                $.ajax({
+                    url: $(element).attr("action"),
+                    type: 'POST',
+                    data: formdata,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        if (data.ok){
+                            $(element).closeModal();
+                            console.log(data.ok);
+                            Materialize.toast('File uploaded successfully. It will be processed soon.', 8000);
+                        }else{
+                            Materialize.toast('Error on file upload', 3000);
+                            console.log(data);
+                        }
+                    }, 
+                    error: function(jqXHR, textStatus, error){
+                        Materialize.toast('Error on file upload', 3000);
+                        
+                        console.log(jqXHR, textStatus, error);
+                    }
+                })
+                return false;
+            });
+            
+        }
+    };
+}]);

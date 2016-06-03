@@ -19,9 +19,7 @@ app.directive('select', [function () {
     };
 }]);
 
+        
 $(function () {
     $(".button-collapse").sideNav();
-    
-   
-   
 });

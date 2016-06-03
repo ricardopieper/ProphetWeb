@@ -1,6 +1,7 @@
 ﻿var express = require('express');
 var router = express.Router();
 var Model = require('../data/cassandra/Model');
+var Upload = require('../data/cassandra/Upload');
 var multer = require('multer');
 
 var storage = multer.diskStorage({
@@ -51,9 +52,41 @@ router.get('/', function (req, res, next) {
     Model.find(returnJson(req, res, next));
 });
 
+
+router.get('/', function (req, res, next) {
+    Model.find(returnJson(req, res, next));
+});
+
+router.post('/train', function(req,res,next){
+   var model = new Model({ model_id: req.body.model_id });
+   model.scheduleTraining(returnJson(req, res, next));
+});
+
 router.post('/upload', upload.single('file'), function (req, res, next) {
-    if (err) return next(err);
-    res.json({});
+         
+    var fs = require('fs');
+    console.log(req.file);
+    fs.readFile(req.file.path, 'utf8', function(errFile, data){
+        if (data){
+            var upload = new Upload({
+                model_id: req.body.model_id,
+                file: data
+            })
+            upload.save((err)=>{
+                if (err) {
+                    res.json({ok: false, error: err});
+                }
+                else {
+                    res.json({
+                        ok: true
+                    });
+                }
+            });
+        }else{
+            res.json({ok: false, error: errFile});
+        }
+    });
+
 });
 
 module.exports = router;

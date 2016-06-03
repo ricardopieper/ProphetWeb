@@ -91,6 +91,7 @@ var routes = require('./routes/index');
 var digesters = require('./routes/digesters');
 var engines = require('./routes/engines');
 var models = require('./routes/models');
+var uploads = require('./routes/uploads');
 
 
 
@@ -119,6 +120,7 @@ app.use('/', routes);
 app.use('/digesters', digesters);
 app.use('/engines', engines);
 app.use('/models', models);
+app.use('/uploads', uploads);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
