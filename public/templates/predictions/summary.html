@@ -1,0 +1,158 @@
+<div>
+    <div class="row">
+        <div class="col s12 m6 l6">
+            <h5>Last uploaded record:</h5>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Variable:
+                        </th>
+                        <th>
+                            Value:
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="var in vm.lastrecord">
+                        <td>
+                            {{var.name}}
+                        </td>
+                        <td>
+                            {{var.value}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+        </div>
+        <div class="col s12 m6 l6">
+            <h5>Averages (for all data):</h5>
+            <table>
+                <thead>
+                    <tr>
+                        <th>
+                            Variable:
+                        </th>
+                        <th>
+                            Value:
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="var in vm.averages">
+                        <td>
+                            {{var.name}}
+                        </td>
+                        <td>
+                            {{var.value}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <br />
+    <br />
+    <div class="row">
+        <h5>Predictions:</h5>
+
+        <table class="responsive-table">
+            <thead>
+                <tr>
+                    <th>Variable to predict</th>
+                    <th>Number of predictions</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Render Chart</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="p in vm.predictions">
+                    <td>{{p.inputdesc}}</td>
+                    <td>{{p.amountpredictions}}</td>
+                    <td>{{p.fromvalue}}</td>
+                    <td>{{p.tovalue}}</td>
+                    <td>
+                        <button ng-click="vm.render(p)"
+                                class="waves-effect waves-circle btn-floating red darken-1">
+                            <i class="material-icons">done</i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tbody ng-hide="vm.predictions.length">
+                <tr colspan="5">
+                    <td colspan="5">
+                        No data
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="5">
+                        <a href="/#/predictions/new/{{vm.model_id}}" class="waves-effect waves-light btn">
+                            <i class="material-icons left">add</i>
+                            New Prediction
+                        </a>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+
+    </div>
+    <br />
+    <div class="row" id="chart">
+        <canvas id="predchart" width="300" height="200"></canvas>
+        <a href="#" ng-hide="vm.notRendered" id="chartdownload" class="waves-effect waves-light btn">
+            <i class="material-icons left">file_download</i>
+            Download chart as image
+        </a>
+
+        <a href="#" ng-click="vm.addToView()" ng-hide="vm.notRendered" class="waves-effect waves-light btn">
+            <i class="material-icons left">add</i>
+            Add to view
+        </a>  
+        <a href="#" ng-click="vm.addToNewView()" ng-hide="vm.notRendered"  class="waves-effect waves-light btn">
+            <i class="material-icons left">add</i>
+            Create new view and add
+        </a>
+    </div>
+</div>
+
+<div id="addToView" ng-form="vm.addToViewPost()" class="modal">
+    <div class="modal-content">
+        <h4>Select the view</h4>
+        <div class="row">
+            <div class="input-field col s12">
+                <select ng-model="vm.chosenview.view_id" material-select watch>
+                    <option ng-repeat="view in vm.allviews" value="{{view.view_id}}">{{view.name}}</option>
+                </select>
+                <label for="outputvar"></label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button ng-click="vm.addToViewPost()" class="modal-action waves-effect waves-green blue-text btn-flat">Save</button>
+        <button type="reset" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Cancel</button>
+    </div>
+</div>
+
+
+<div id="addToNewView" ng-form=""  class="modal">
+    <div class="modal-content">
+        <h4>Create view and add</h4>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="name" placeholder="Name" ng-model="vm.chosenview.name" type="text" class="validate">
+                <label for="name" class="{{vm.labelclass}}">Name</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button ng-click="vm.addToNewViewPost()" class="modal-action waves-effect waves-green blue-text btn-flat">Save</button>
+        <button type="reset" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Cancel</button>
+    </div>
+</div>

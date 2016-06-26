@@ -1,0 +1,47 @@
+<div>
+    <input type="hidden" id="viewid" value="{{vm.view.view_id}}" />
+
+    <div class="row">
+        <div class="input-field col s1">
+            <button edit-button class="waves-effect waves-circle btn-floating" style="float:left; position:relative; top: 17px; left: 18px">
+                <i class="material-icons" id="editicon">edit</i>
+            </button>
+        </div>
+        <div class="input-field col s10">
+
+            <h4 class="header" style="float:left" id="headerlabel">
+                {{vm.view.name}}
+            </h4>
+
+            <div style="display:none" id="editname">
+                <input id="viewname" value="{{vm.view.name}}" placeholder="" type="text" class="validate">
+            </div>
+        </div>
+       
+    </div>
+
+   
+
+  
+
+   
+    
+    <br style="clear:both" />
+    <div>
+        <div ng-repeat="chart in vm.charts">
+            <div class="row">
+                <div class="input-field col s1">
+                    <a href="#" download class="waves-effect waves-circle btn-floating" 
+                            style="float:left; position:relative; top: 10px; left: 18px">
+                        <i class="material-icons" id="editicon">save</i>
+                    </a>
+                </div>
+                <div class="input-field col s10">
+                    <h5>{{chart.xaxis}} vs {{chart.yaxis}}</h5>
+                </div>
+            </div>
+            
+            <canvas width="300" height="100" chartcanvas="chart"></canvas>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+﻿<div>
+    <h4 class="header" ng-hide="vm.view.name">
+        Views
+    </h4>
+    <br />
+    <div>
+        <div class="row">
+            <div class="col s12">
+                <table class="responsive-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+
+                            <th>View/Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="view in vm.views">
+
+                            <td>{{view.name}}</td>
+                            <td>
+                                <a href="/#/views/{{view.view_id}}" class="waves-effect waves-circle btn-floating">
+                                    <i class="material-icons">done</i>
+                                </a>
+                                <button ph-modal="#modalDelete" ng-click="vm.askDelete(model)"
+                                        class="waves-effect waves-circle btn-floating red darken-1">
+                                    <i class="material-icons">delete</i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tbody ng-hide="vm.views.length">
+                        <tr colspan="5">
+                            <td colspan="5">
+                                No data
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+<div id="modalDelete" class="modal">
+    <div class="modal-content">
+        <h4>Delete model '{{vm.modelToDelete.name}}'</h4>
+        <p>Are you sure you want to delete the model?</p>
+    </div>
+    <div class="modal-footer">
+        <a ng-click="vm.confirmDelete()" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Agree</a>
+        <button class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Cancel</button>
+    </div>
+</div>
+
+<div id="modalTrain" class="modal">
+    <div class="modal-content">
+        <h4>Train Model</h4>
+        <div class="file-field input-field">
+            <span>Do you wish to schedule a model training? If yes, the training process will start as soon as possible.</span>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button ng-click="vm.scheduleTraining(modelToTrain)" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">
+            Yes</a>
+            <button class="modal-close modal-action waves-effect waves-green blue-text btn-flat">No</button>
+    </div>
+</div>
+
+<form id="modalUpload" class="modal" method="POST" action="/models/upload" enctype="multipart/form-data" form-upload>
+    <div class="modal-content">
+        <h4>Upload file</h4>
+        <div class="file-field input-field">
+            <div class="btn">
+                <span>File</span>
+                <input type='hidden' name="model_id" value="{{vm.modelToUpload.model_id}}" />
+                <input type="file" name="file" />
+            </div>
+            <div class="file-path-wrapper">
+                <input class="file-path validate" type="text">
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="modal-action waves-effect waves-green blue-text btn-flat">
+            Upload</a>
+            <button type="reset" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Cancel</button>
+    </div>
+    </div>
+

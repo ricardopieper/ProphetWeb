@@ -1,0 +1,51 @@
+<form ng-submit="vm.save()">
+    <div class="row">
+        <div class="input-field col s12">
+            <select id="inputvars" ng-model="vm.chart.input" material-select watch>
+                <option ng-repeat="value in vm.inputvars" value="{{value.name}}">{{value.desc}}</option>
+            </select>
+            <label for="inputvars" class="active">Time Variable</label>
+        </div>
+    </div>
+    
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="name" placeholder="Range Start" ng-model="vm.chart.timevar.from" type="number">
+            <label for="name" class="active">Range Start</label>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="name" placeholder="Range End" ng-model="vm.chart.timevar.to" type="number">
+            <label for="name" class="active">Range End</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="input-field col s12">
+            <input id="predictions" placeholder="Amount of predictions" ng-model="vm.chart.predictions" type="number">
+            <label for="value_{{inpur.value}}" class="active">Amount of predictions</label>
+        </div>
+    </div>
+
+    <h5>Values for fixed variables:</h5>
+
+    <div class="row" ng-repeat="input in vm.inputvars" ng-hide="input.name == vm.chart.input">
+        <div class="input-field col s12" ng-hide="input.name == vm.chart.input">
+            <input id="value_{{input.name}}" placeholder="Value" ng-model="input.value" type="number">
+            <label for="value_{{input.name}}" class="active">{{input.desc}}</label>
+        </div>
+    </div>
+  
+    <div class="row">
+        <div class="input-field col s12">
+            <a href="/#/models/list" class="btn waves-effect white waves-light blue-text" type="submit" name="action">
+                Discard
+            </a>
+            <button class="btn waves-effect waves-light" type="submit" name="action">
+                Save
+                <i class="material-icons left">send</i>
+            </button>
+        </div>
+    </div>
+</form>

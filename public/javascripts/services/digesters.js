@@ -10,4 +10,5 @@ app.service('DigestersService', ['$http', function ($http) {
 
     this.delete = (digester) =>
         $http.delete('/digesters/' + digester.digester_id);
+
 }]);

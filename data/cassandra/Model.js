@@ -1,20 +1,21 @@
 ﻿var cassandra = require('cassandra-driver');
 var client = new cassandra.Client(require("../Connection"));
 var meta = require("../../Helpers/meta");
-
+var async = require('async');
+var Promise = require("promise")
 var Model = function (modelData) {
 
     meta.copy(modelData, this);
-   
-    this.scheduleTraining = function(callback){
+
+    this.scheduleTraining = function (callback) {
         var query = 'update models set state = 1 where model_id = ?';
         client.execute(query, [
-            this.model_id                
+            this.model_id
         ], { prepare: true }, function (err, data) {
             callback(err);
         });
     }
-   
+    var self = this;
     this.save = function (callback) {
         console.log("Model.save", modelData);
         if (!this.model_id) {
@@ -37,7 +38,7 @@ var Model = function (modelData) {
                 this.name,
                 this.inputvars,
                 this.outputvar,
-                this.model_id                
+                this.model_id
             ], { prepare: true }, function (err, data) {
                 callback(err);
             });
@@ -53,11 +54,79 @@ var Model = function (modelData) {
         });
     }
 
+    this.basicModelViewPromise = function () {
+        console.log("basicModelViewPromise");
+        var query = 'select * from basicmodelview where model_id = ?';
+        return new Promise(function (complete, reject) {
+            client.execute(query, [self.model_id], { prepare: true }, function (err, data) {
+                var result = data && data.rows && data.rows.length != 0 ? data.rows[0] : null;
+                if (err) {
+                    console.log("basicModelViewPromise ERR", err);
+
+                    reject(err);
+                } else {
+                    complete(result);
+                }
+            });
+        });
+    }
+    this.predictionsPromise = function (summary) {
+        
+        var query = 'select * from modelpredictions where model_id = ? and state = 1 ALLOW FILTERING';
+        return new Promise(function (complete, reject) {
+            client.execute(query, [self.model_id], { prepare: true }, function (err, data) {
+                var result = data && data.rows && data.rows.length != 0 ? data.rows : null;
+                if (err) {
+                    console.log("predictionsPromise ERR", err);
+
+                    reject(err);
+                } else {
+                    summary.predictions = result;
+                    complete(summary);
+                }
+            });
+        });
+    }
+    this.lastRecordPromise = function (summary) {
+        var fields = self.inputvars.concat(self.outputvar).join(", ");
+
+
+
+        var query = 'select ' + fields + ' from prophet.modeldatasets where model_id = ? '
+            + 'order by row_id desc limit 1';
+
+        return new Promise(function (complete, reject) {
+            client.execute(query, [self.model_id], { prepare: true }, function (err, data) {
+                var result = data && data.rows && data.rows.length != 0 ? data.rows[0] : null;
+                if (err) {
+                    reject(err);
+                } else {
+                    summary.lastrecord = result;
+                    complete(summary);
+                }
+            });
+        });
+    }
+
+    this.getSummary = function (callback) {
+        console.log("getSummary");
+        this.basicModelViewPromise()
+            .then(this.predictionsPromise)
+            .then(this.lastRecordPromise)
+            .then(function (result) {
+
+                callback(null, result);
+            })
+            .catch(function (err) {
+                callback(err, null);
+            });
+    }
+
 };
 Model.find = function (callback) {
     var query = 'select * from models';
     client.execute(query, [], { prepare: true }, function (err, data) {
-        callback(err, !data || !data.rows? []: data.rows.map(x=> new Model(x)));
+        callback(err, !data || !data.rows ? [] : data.rows.map(x => new Model(x)));
     });
 };
 
@@ -66,7 +135,7 @@ Model.findDigesterModels = function (digester_id) {
         exec: function (callback) {
             var query = 'select * from digesters where digester_id = ?';
             client.execute(query, [digester_id], { prepare: true }, function (err, data) {
-                callback(err, !data || !data.rows? []: data.rows.map(x=> new Model(x)));
+                callback(err, !data || !data.rows ? [] : data.rows.map(x => new Model(x)));
             });
         }
     }
@@ -77,7 +146,7 @@ Model.findEngineModels = function (engine_id) {
         exec: function (callback) {
             var query = 'select * from models where engine_id = ?';
             client.execute(query, [engine_id], { prepare: true }, function (err, data) {
-                callback(err, !data || !data.rows? []: data.rows.map(x=> new Model(x)));
+                callback(err, !data || !data.rows ? [] : data.rows.map(x => new Model(x)));
             });
         }
     }

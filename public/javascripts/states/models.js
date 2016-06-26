@@ -13,33 +13,18 @@ app.config(
                     listModels: ['ModelsService', function (ModelsService) {
                         return ModelsService.getAll();
                     }],
-                    inputvars: [function() {
-                        return [
-                            {value:"temp1", desc:"Temperature Top"},
-                            {value:"temp2", desc:"Temperature Middle"},
-                            {value:"temp3", desc:"Temperature Bottom"},
-                            {value:"tempOut", desc:"Temperature Outside"},
-                            {value:"pH", desc:"pH"},
-                            {value:"pressure", desc:"Pressure"},
-                            {value:"retentionTime", desc:"Retention Time"},
-                            {value:"substrateConcentration", desc:"Substrate Concentration (g/liter)"},
-                            {value:"engineSpeed", desc:"Engine Speed"}
-                        ];
-                    }],
-                    outputvars: [function() {
-                        return [
-                            {value:"biogasml", desc:"Biogas Production (ml)"},
-                            {value:"ch4ml", desc:"CH4 Methane Production (ml)"},
-                            {value:"co2ml", desc:"CO2 Carbon Dioxide Production (ml)"},
-                            {value:"energy", desc:"Energy Production"}
-                        ];
-                    }],
                     listEngines: ['EnginesService', function (EnginesService) {
                         return EnginesService.getAll();
                     }],
                     listDigesters: ['DigestersService', function (DigestersService) {
                         return DigestersService.getAll();
                     }],
+                    inputvars: ['ModelsService', function(ModelsService) {
+                        return ModelsService.inputVars;
+                    }],
+                    outputvars: ['ModelsService', function(ModelsService) {
+                        return ModelsService.outputVars;
+                    }]
                 }
             }).state('models.list', {
                 templateUrl: '/templates/models/list.html',

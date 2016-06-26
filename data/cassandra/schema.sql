@@ -19,7 +19,8 @@ CREATE TABLE IF NOT EXISTS models (
 	engine_id uuid,
 	name text,
 	inputvars list<text>,
-	outputvar text
+	outputvar text,
+	millisecondstraining int
 );
 ALTER TABLE models ADD state int;
 ALTER TABLE models ADD trainingResult text;
@@ -38,19 +39,7 @@ CREATE TABLE IF NOT EXISTS uploads (
 
 CREATE TABLE IF NOT EXISTS basicmodelview (
 	model_id uuid PRIMARY KEY,
-	avgTemp1 double,
-	avgTemp2 double,
-	avgTemp3 double,
-	avgTempOut double,
-	avgpH double,
-	avgPressure double,
-	avgRetentionTime bigint,
-	avgSubstrateConcentration double,
-	avgBiogasml double,
-	avgCh4ml double,
-	avgCo2ml double,
-	avgEngineSpeed double,
-	avgEnergy double
+	averages map<text, double>
 );
 
 CREATE TABLE IF NOT EXISTS modeldatasets (
@@ -88,12 +77,22 @@ CREATE TABLE IF NOT EXISTS modelpredictions(
 	inputvar text,
 	fromValue double,
 	toValue double,
+	amountPredictions int,
 	result text, 
 	state int	
 	PRIMARY KEY(model_id, prediction_id)	
 );
 
+create type if not exists predictionid{
+	model_id uuid,
+	prediction_id uuid
+};
 
+CREATE TABLE IF NOT EXISTS dataviews(
+	view_id uuid,
+	name text,
+	predictions set<predictionid>
+);
 
 
 

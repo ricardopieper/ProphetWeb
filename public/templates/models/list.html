@@ -4,6 +4,7 @@
             <thead>
                 <tr>
                     <th>Train Model</th>
+                    <th>Predictions</th>
                     <th>Name</th>
                     <th>Input Variables</th>
                     <th>Output Variable</th>
@@ -17,6 +18,9 @@
                                 ng-click="vm.setModelToTrain(model)">
                             <i class="material-icons">play_arrow</i>
                         </button>
+                    </td>
+                     <td>
+                        <a href="/#/predictions/summary/{{model.model_id}}">Predictions</a>
                     </td>
                     <td>{{model.name}}</td>
                     <td>{{model.inputvarsDesc}}</td>
@@ -76,7 +80,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button ng-click="vm.scheduleTraining(modelToTrain)" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Yes</a>
+        <button ng-click="vm.scheduleTraining(modelToTrain)" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Yes</button>
         <button class="modal-close modal-action waves-effect waves-green blue-text btn-flat">No</button>
     </div>
 </div>
@@ -96,8 +100,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" class="modal-action waves-effect waves-green blue-text btn-flat">Upload</a>
+        <button type="submit" class="modal-action waves-effect waves-green blue-text btn-flat">Upload</button>
         <button type="reset" class="modal-close modal-action waves-effect waves-green blue-text btn-flat">Cancel</button>
     </div>
-</div>
+</form>
 

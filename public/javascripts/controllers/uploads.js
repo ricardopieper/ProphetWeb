@@ -6,4 +6,6 @@ app.controller('UploadsController',
         function (listUploads, UploadsService, $state) {
 
             this.uploads = listUploads;
-}]);
+        }
+    ]
+);

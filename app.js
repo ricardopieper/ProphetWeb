@@ -5,10 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-
 var dbtype = "cassandra";
-
-
 
 if (dbtype == "cassandra") {
 
@@ -22,7 +19,7 @@ if (dbtype == "cassandra") {
     var query = "select table_name from system_schema.tables where keyspace_name = 'prophet';";
     
     client.execute(query, [], { prepare: false }, function(err, data) {
-    
+        console.log(data);
        var tables = data.rows.map(x => x.table_name);
        
        if (!tables || !tables.length)
@@ -78,22 +75,15 @@ if (dbtype == "cassandra") {
     });
 
 
-} else { //se for mongo por exemplo
 }
-
-
-
-
-//var mongoose = require('mongoose');
-
 
 var routes = require('./routes/index');
 var digesters = require('./routes/digesters');
 var engines = require('./routes/engines');
 var models = require('./routes/models');
 var uploads = require('./routes/uploads');
-
-
+var predictions = require('./routes/predictions');
+var views = require('./routes/views');
 
 
 var app = express();
@@ -121,6 +111,8 @@ app.use('/digesters', digesters);
 app.use('/engines', engines);
 app.use('/models', models);
 app.use('/uploads', uploads);
+app.use('/predictions', predictions);
+app.use('/views', views);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

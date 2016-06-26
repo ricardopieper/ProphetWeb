@@ -7,6 +7,8 @@ app.controller('ModelsController',
         function (model, listModels, ModelsService, $state, inputvars, outputvars,
                   listDigesters, listEngines) {
 
+            console.log("ModelsController");
+
             this.labelclass = model.model_id ? "active" : "";
 
             this.models = listModels;
@@ -83,7 +85,6 @@ app.controller('ModelsController',
                 ModelsService.scheduleTraining(this.modelToTrain);
                 Materialize.toast('The model has been scheduled to be trained.', 4000)
             }
-
         }]);
 
 app.directive('formUpload', [function(){

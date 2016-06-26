@@ -6,19 +6,19 @@
   "bundle": "typings/tsd.d.ts",
   "installed": {
     "node/node.d.ts": {
-      "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
+      "commit": "73110d92bdab2367e326f297bef3574285cba329"
     },
     "body-parser/body-parser.d.ts": {
       "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
     },
     "serve-static/serve-static.d.ts": {
-      "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
+      "commit": "1be72cdce38fa12471085ac2cf39b0a901321720"
     },
     "express/express.d.ts": {
-      "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
+      "commit": "1be72cdce38fa12471085ac2cf39b0a901321720"
     },
     "mime/mime.d.ts": {
-      "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
+      "commit": "1be72cdce38fa12471085ac2cf39b0a901321720"
     },
     "jade/jade.d.ts": {
       "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
@@ -33,7 +33,7 @@
       "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
     },
     "express-serve-static-core/express-serve-static-core.d.ts": {
-      "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
+      "commit": "1be72cdce38fa12471085ac2cf39b0a901321720"
     },
     "morgan/morgan.d.ts": {
       "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
@@ -54,16 +54,28 @@
       "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
     },
     "angularjs/angular.d.ts": {
-      "commit": "b4bbee8f60560c34bc74b154b283f7ce83a31dae"
+      "commit": "73110d92bdab2367e326f297bef3574285cba329"
     },
     "mongoose/mongoose.d.ts": {
       "commit": "08ed4e9f1869e37e29514d862e0158b40e550232"
     },
     "jquery/jquery.d.ts": {
-      "commit": "b4bbee8f60560c34bc74b154b283f7ce83a31dae"
+      "commit": "73110d92bdab2367e326f297bef3574285cba329"
     },
     "ejs-locals/ejs-locals.d.ts": {
       "commit": "e05e1f6f83c6ac84e9d7ff8284e8089d53a788a6"
+    },
+    "multer/multer.d.ts": {
+      "commit": "1be72cdce38fa12471085ac2cf39b0a901321720"
+    },
+    "promise/promise.d.ts": {
+      "commit": "26a1f8c44f5fe76168df717020bfb93839b63db3"
+    },
+    "cassandra-driver/cassandra-driver.d.ts": {
+      "commit": "73110d92bdab2367e326f297bef3574285cba329"
+    },
+    "long/long.d.ts": {
+      "commit": "73110d92bdab2367e326f297bef3574285cba329"
     }
   }
 }

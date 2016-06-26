@@ -18,3 +18,7 @@
 /// <reference path="jquery/jquery.d.ts" />
 /// <reference path="mongoose/mongoose.d.ts" />
 /// <reference path="ejs-locals/ejs-locals.d.ts" />
+/// <reference path="multer/multer.d.ts" />
+/// <reference path="promise/promise.d.ts" />
+/// <reference path="cassandra-driver/cassandra-driver.d.ts" />
+/// <reference path="long/long.d.ts" />
