@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS modelparams(
 	varname text,
 	data blob,
 	dimensions list<int>,
-	PRIMARY KEY(model_id, modelparams_id),
+	PRIMARY KEY((model_id), modelparams_id),
 );
 
 CREATE TABLE IF NOT EXISTS modelpredictions(
