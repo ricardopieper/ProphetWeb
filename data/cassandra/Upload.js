@@ -73,9 +73,10 @@ var Upload = function (uploadData) {
                             } else {
                                 var end = new Date().getTime();
                                 var time = end - startingtime;
-                                
-                                callback(null);
                                 Model.setUploadTime(model_id, time).exec(function(){ });
+                               
+                                callback(null);
+                               
                             }
                         }
                     });
