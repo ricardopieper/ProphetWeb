@@ -45,7 +45,8 @@ var Upload = function (uploadData) {
                      console.log("chunkifying, remaining", remainingChars);   
                     var charsToInsert = Math.min(batchSize, remainingChars);
 
-                    chunkified.push(this.file.substr(this.file.length - remainingChars), batchSize);
+                    chunkified.push(this.file.substr(this.file.length - remainingChars, charsToInsert));
+                    
                     console.log(chunkified.map(x=> x.length));
                     remainingChars -= charsToInsert;
                 }
