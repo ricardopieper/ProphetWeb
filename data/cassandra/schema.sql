@@ -66,7 +66,7 @@ CREATE TABLE IF NOT EXISTS modeldatasets (
 	co2ml double,
 	engineSpeed double,
 	energy double,
-	PRIMARY KEY(model_id, row_id)
+	PRIMARY KEY((model_id), row_id)
 );
 
 CREATE TABLE IF NOT EXISTS modelparams(
