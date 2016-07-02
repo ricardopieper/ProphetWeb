@@ -34,16 +34,16 @@ CREATE TABLE IF NOT EXISTS uploads (
 	date timestamp,
 	processed boolean,
 	result text,
-	PRIMARY KEY(model_id, upload_id)
+	PRIMARY KEY((model_id), upload_id)
 );
-#delete from uploadchunks where model_id = 1447520e-21f9-46f8-8fd1-32fcf6ed8283 and upload_id = 1447520e-21f9-46f8-8fd1-32fcf6ed8283 ;
+
 CREATE TABLE IF NOT EXISTS uploadchunks (
 	model_id uuid,
 	upload_id uuid,
-	chunk_id uuid,
+	date timestamp,
 	chunk text,
-	PRIMARY KEY((model_id, upload_id), chunk_id)
-);
+	PRIMARY KEY((model_id), upload_id, date)
+) WITH clustering order by (upload_id asc, date asc);
 
 CREATE TABLE IF NOT EXISTS basicmodelview (
 	model_id uuid PRIMARY KEY,
@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS basicmodelview (
 
 CREATE TABLE IF NOT EXISTS modeldatasets (
 	model_id uuid,
-	row_id uuid,
+	row_id timestamp,
 	temp1 double,
 	temp2 double,
 	temp3 double,
@@ -67,7 +67,8 @@ CREATE TABLE IF NOT EXISTS modeldatasets (
 	engineSpeed double,
 	energy double,
 	PRIMARY KEY((model_id), row_id)
-);
+) WITH clustering order by (row_id asc);
+
 
 CREATE TABLE IF NOT EXISTS modelparams(
 	model_id uuid,
@@ -88,7 +89,7 @@ CREATE TABLE IF NOT EXISTS modelpredictions(
 	amountPredictions int,
 	result text, 
 	state int,	
-	PRIMARY KEY(model_id, prediction_id)	
+	PRIMARY KEY((model_id), prediction_id)	
 );
 
 create type if not exists predictionid(

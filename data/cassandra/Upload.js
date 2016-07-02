@@ -58,7 +58,7 @@ var Upload = function (uploadData) {
 
                     console.log("saving chunk for model ", model_id, " upload ", upload_id, "size chunk ", head.length, "remaining", tail.length)
                  
-                    var query = 'insert into uploadchunks (model_id, upload_id, chunk_id, chunk) values (?, ?, uuid(), ?)';
+                    var query = 'insert into uploadchunks (model_id, upload_id, date, chunk) values (?, ?, toTimestamp(now()), ?)';
                     client.execute(query, [
                         model_id,
                         upload_id,
