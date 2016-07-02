@@ -10,7 +10,9 @@ var Upload = function (uploadData) {
     this.save = function (callback) {
             
         this.upload_id = cassandra.types.Uuid.random();
-               
+            
+         console.log("saving upload");   
+
         var query = 'insert into uploads (model_id, upload_id, date, processed, result) values (?, ?, toTimestamp(now()), ?, ?)';
         client.execute(query, [
             this.model_id,
@@ -18,6 +20,8 @@ var Upload = function (uploadData) {
             false,
             "Pending",
         ], { prepare: true }, function (err, data) {
+            console.log("upload result", err, data);   
+
             callback(err);
         });
         
@@ -28,6 +32,7 @@ var Upload = function (uploadData) {
         var upload_id = this.upload_id;
         this.save((err, data) =>{
             if (err){
+                console.log("err upload",err, data);   
                 callback(err, data);
             } else {
 
@@ -37,14 +42,15 @@ var Upload = function (uploadData) {
                 var chunkified = [];
 
                 while (remainingChars > 0){
-
+                     console.log("chunkifying, remaining", remainingChars);   
                     var charsToInsert = Math.min(batchSize, remainingChars);
 
                     chunkified.push(this.file.substr(this.file.length - remainingChars), batchSize);
 
                     remainingChars -= charsToInsert;
                 }
-
+                
+                console.log("chunks: ", chunkified.length);   
 
 
                 function uploadChunks(head, tail, model_id, startingtime){
