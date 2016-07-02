@@ -14,7 +14,7 @@ var Upload = function (uploadData) {
         var query = 'insert into uploads (model_id, upload_id, date, processed, result) values (?, ?, toTimestamp(now()), ?, ?)';
         client.execute(query, [
             this.model_id,
-            this.id,
+            this.upload_id,
             false,
             "Pending",
         ], { prepare: true }, function (err, data) {
@@ -25,7 +25,7 @@ var Upload = function (uploadData) {
 
 
     this.chunkSave = function(callback) {
-
+        var upload_id = this.upload_id;
         this.save((err, data) =>{
             if (err){
                 callback(err);
@@ -53,7 +53,7 @@ var Upload = function (uploadData) {
                     var query = 'insert into uploadchunks (model_id, upload_id, chunk_id, chunk) values (?, ?, uuid(), ?)';
                     client.execute(query, [
                         this.model_id,
-                        this.upload_id,
+                        upload_id,
                         head,
                     ], { prepare: true }, function (err, data) {
                         if (err){
