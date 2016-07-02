@@ -1,7 +1,7 @@
 ﻿var cassandra = require('cassandra-driver');
 var client = new cassandra.Client(require("../Connection"));
 var meta = require("../../Helpers/meta");
-var Model = require("Model");
+var Model = require("./Model");
 
 var Upload = function (uploadData) {
 
