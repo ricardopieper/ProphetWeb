@@ -28,7 +28,7 @@ var Upload = function (uploadData) {
         var upload_id = this.upload_id;
         this.save((err, data) =>{
             if (err){
-                callback(err);
+                callback(err, data);
             } else {
 
                 var batchSize = 5 * 1000 * 1000; //5mb max
@@ -66,7 +66,7 @@ var Upload = function (uploadData) {
                                 var end = new Date().getTime();
                                 var time = end - startingtime;
                                 
-                                callback(null);
+                                callback(0);
                                 Model.setUploadTime(model_id, time).exec(function(){ });
                             }
                         }

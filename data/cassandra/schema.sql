@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS models (
 ALTER TABLE models ADD state int;
 ALTER TABLE models ADD trainingResult text;
 ALTER TABLE models ADD millisecondsupload int;
+ALTER TABLE models ADD millisecondstransferfile int;
 ALTER TABLE models ADD millisecondslastprediction int;
 
 CREATE TABLE IF NOT EXISTS uploads (

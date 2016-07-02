@@ -67,10 +67,7 @@ router.post('/upload', upload.single('file'), function (req, res, next) {
     var fs = require('fs');
     console.log(req.file);
     fs.readFile(req.file.path, 'utf8', function(errFile, data){
-        if (data){
-
-
-
+        if (!errFile && data){
             var upload = new Upload({
                 model_id: req.body.model_id,
                 file: data
@@ -88,7 +85,8 @@ router.post('/upload', upload.single('file'), function (req, res, next) {
 
                 fs.unlinkSync(req.file.path);	
             });
-        }else{
+        }
+        else{
             res.json({ok: false, error: errFile});
         }
     });
