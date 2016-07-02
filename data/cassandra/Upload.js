@@ -10,7 +10,7 @@ var Upload = function (uploadData) {
     this.save = function (callback) {
             
       
-         console.log("saving upload");   
+        console.log("saving upload");   
 
         var query = 'insert into uploads (model_id, upload_id, date, processed, result) values (?, ?, toTimestamp(now()), ?, ?)';
         client.execute(query, [
@@ -28,6 +28,7 @@ var Upload = function (uploadData) {
 
 
     this.chunkSave = function(callback) {
+        var self = this;
         self.upload_id = cassandra.types.Uuid.random();
             
 
@@ -69,10 +70,12 @@ var Upload = function (uploadData) {
                         var end = new Date().getTime();
                         var time = end - startingtime;
 
-                          this.save((err, data) =>{
+                          self.save((err, data) =>{
                             if (err){
+                            
                                 console.log("err upload",err, data);   
                                 callback(err, data);
+                            
                             } else {
    
                                 Model.setUploadTime(model_id, time).exec(function(){ 
