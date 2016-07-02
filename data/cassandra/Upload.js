@@ -6,10 +6,10 @@ var Model = require("./Model");
 var Upload = function (uploadData) {
 
     meta.copy(uploadData, this);
-   
+    var self = this;
     this.save = function (callback) {
             
-        this.upload_id = cassandra.types.Uuid.random();
+        self.upload_id = cassandra.types.Uuid.random();
             
          console.log("saving upload");   
 
@@ -54,7 +54,7 @@ var Upload = function (uploadData) {
                 console.log("chunks: ", chunkified.length);   
 
 
-                function uploadChunks(head, tail, model_id, startingtime){
+                function uploadChunks(head, tail, model_id, upload_id, startingtime){
 
                     console.log("saving chunk for model ", model_id, " upload ", upload_id, "size chunk ", head.length, "remaining", tail.length)
                  
@@ -69,12 +69,12 @@ var Upload = function (uploadData) {
                         }else{
                             
                             if (tail && tail.length > 0) {
-                                uploadChunks(tail[0], tail.slice(1), model_id, startingtime)
+                                uploadChunks(tail[0], tail.slice(1), model_id, upload_id, startingtime)
                             } else {
                                 var end = new Date().getTime();
                                 var time = end - startingtime;
                                 
-                                callback(0);
+                                callback(null);
                                 Model.setUploadTime(model_id, time).exec(function(){ });
                             }
                         }
@@ -83,7 +83,7 @@ var Upload = function (uploadData) {
                 }
                 var start = new Date().getTime();
 
-                uploadChunks(chunkified[0], chunkified.slice(1), this.model_id, start);
+                uploadChunks(chunkified[0], chunkified.slice(1), this.model_id, this.upload_id, start);
 
             }
         })
