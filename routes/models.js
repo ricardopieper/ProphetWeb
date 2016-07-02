@@ -72,6 +72,9 @@ router.post('/upload', upload.single('file'), function (req, res, next) {
                 model_id: req.body.model_id,
                 file: data
             })
+
+            console.log(data.length);
+
             upload.chunkSave((err)=>{
                 
                 if (err) {
