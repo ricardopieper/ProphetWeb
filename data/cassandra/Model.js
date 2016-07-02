@@ -169,6 +169,7 @@ Model.setUploadTime = function (model_id, time) {
     return {
         exec: function (callback) {
             var query = 'update models set millisecondstransferfile = ? where model_id = ?';
+            console.log("update models milliseconds id ", model_id, time);
             client.execute(query, [model_id, time], { prepare: true }, function (err, data) {
                 callback(err, data);
             });

@@ -9,8 +9,7 @@ var Upload = function (uploadData) {
     var self = this;
     this.save = function (callback) {
             
-        self.upload_id = cassandra.types.Uuid.random();
-            
+      
          console.log("saving upload");   
 
         var query = 'insert into uploads (model_id, upload_id, date, processed, result) values (?, ?, toTimestamp(now()), ?, ?)';
@@ -29,68 +28,69 @@ var Upload = function (uploadData) {
 
 
     this.chunkSave = function(callback) {
-        var upload_id = this.upload_id;
-        this.save((err, data) =>{
-            if (err){
-                console.log("err upload",err, data);   
-                callback(err, data);
-            } else {
+        self.upload_id = cassandra.types.Uuid.random();
+            
 
-                var batchSize = 5 * 1000 * 1000; //5mb max
-                var remainingChars = this.file.length;
+        var batchSize = 5 * 1000 * 1000; //5mb max
+        var remainingChars = this.file.length;
 
-                var chunkified = [];
+        var chunkified = [];
 
-                while (remainingChars > 0){
-                     console.log("chunkifying, remaining", remainingChars);   
-                    var charsToInsert = Math.min(batchSize, remainingChars);
+        while (remainingChars > 0){
+             console.log("chunkifying, remaining", remainingChars);   
+            var charsToInsert = Math.min(batchSize, remainingChars);
 
-                    chunkified.push(this.file.substr(this.file.length - remainingChars, charsToInsert));
+            chunkified.push(this.file.substr(this.file.length - remainingChars, charsToInsert));
 
-                    console.log(chunkified.map(x=> x.length));
-                    remainingChars -= charsToInsert;
-                }
-                
-                console.log("chunks: ", chunkified.length);   
+            console.log(chunkified.map(x=> x.length));
+            remainingChars -= charsToInsert;
+        }
+        
+        console.log("chunks: ", chunkified.length);   
 
 
-                function uploadChunks(head, tail, model_id, upload_id, startingtime){
+        function uploadChunks(head, tail, model_id, upload_id, startingtime){
 
-                    console.log("saving chunk for model ", model_id, " upload ", upload_id, "size chunk ", head.length, "remaining", tail.length)
-                 
-                    var query = 'insert into uploadchunks (model_id, upload_id, date, chunk) values (?, ?, toTimestamp(now()), ?)';
-                    client.execute(query, [
-                        model_id,
-                        upload_id,
-                        head,
-                    ], { prepare: true }, function (err, data) {
-                        if (err){
-                            callback(err);
-                        }else{
-                            
-                            if (tail && tail.length > 0) {
-                                uploadChunks(tail[0], tail.slice(1), model_id, upload_id, startingtime)
+            console.log("saving chunk for model ", model_id, " upload ", upload_id, "size chunk ", head.length, "remaining", tail.length)
+         
+            var query = 'insert into uploadchunks (model_id, upload_id, date, chunk) values (?, ?, toTimestamp(now()), ?)';
+            client.execute(query, [
+                model_id,
+                upload_id,
+                head,
+            ], { prepare: true }, function (err, data) {
+                if (err){
+                    callback(err);
+                }else{
+                    
+                    if (tail && tail.length > 0) {
+                        uploadChunks(tail[0], tail.slice(1), model_id, upload_id, startingtime)
+                    } else {
+                        var end = new Date().getTime();
+                        var time = end - startingtime;
+
+                          this.save((err, data) =>{
+                            if (err){
+                                console.log("err upload",err, data);   
+                                callback(err, data);
                             } else {
-                                var end = new Date().getTime();
-                                var time = end - startingtime;
-
+   
                                 Model.setUploadTime(model_id, time).exec(function(){ 
                                     callback(null);
                                 });
-                               
+
                             }
-                        }
-                    });
-
+                        });
+                    }
                 }
-                var start = new Date().getTime();
+            });
 
-                uploadChunks(chunkified[0], chunkified.slice(1), this.model_id, this.upload_id, start);
+        }
+        var start = new Date().getTime();
 
-            }
-        })
-       
+        uploadChunks(chunkified[0], chunkified.slice(1), this.model_id, this.upload_id, start);
 
+      
 
     }
 
