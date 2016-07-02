@@ -81,6 +81,8 @@ router.post('/upload', upload.single('file'), function (req, res, next) {
                         ok: true
                     });
                 }
+
+		fs.unlinkSync(req.file.path);	
             });
         }else{
             res.json({ok: false, error: errFile});

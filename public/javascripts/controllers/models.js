@@ -109,13 +109,38 @@ app.directive('formUpload', [function(){
                         }else{
                             Materialize.toast('Error on file upload', 3000);
                             console.log(data);
-                        }
+                        $("#modalUpload").find("h4").text("Upload file ("+data.error.message+")");
+			 }
                     }, 
                     error: function(jqXHR, textStatus, error){
                         Materialize.toast('Error on file upload', 3000);
-                        
+                       
                         console.log(jqXHR, textStatus, error);
-                    }
+                    },
+			xhr: function(){
+			
+				var myXhr = $.ajaxSettings.xhr();
+				if (myXhr.upload){
+					myXhr.upload.addEventListener('progress', function(e){
+						if (e.lengthComputable){
+							
+							var max = e.total;
+							var current = e.loaded;
+
+
+							var percentage = (current * 100)/max;
+
+							var strPercentage = percentage.toFixed(2) + "%";	
+			
+
+							$("#modalUpload").find("h4").text("Upload file ("+strPercentage+")");
+						}
+					}, false);
+				}
+
+				return myXhr;			
+
+			}
                 })
                 return false;
             });

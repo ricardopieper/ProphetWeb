@@ -19,8 +19,14 @@ if (dbtype == "cassandra") {
     var query = "select table_name from system_schema.tables where keyspace_name = 'prophet';";
     
     client.execute(query, [], { prepare: false }, function(err, data) {
-        console.log(data);
-       var tables = data.rows.map(x => x.table_name);
+       console.log(data);
+ 
+      if (err){
+	console.log("error: ",err);
+        return;
+      }
+
+      var tables = data.rows.map(x => x.table_name);
        
        if (!tables || !tables.length)
        {

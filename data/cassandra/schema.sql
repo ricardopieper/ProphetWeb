@@ -79,20 +79,17 @@ CREATE TABLE IF NOT EXISTS modelpredictions(
 	toValue double,
 	amountPredictions int,
 	result text, 
-	state int	
+	state int,	
 	PRIMARY KEY(model_id, prediction_id)	
 );
 
-create type if not exists predictionid{
+create type if not exists predictionid(
 	model_id uuid,
 	prediction_id uuid
-};
-
-CREATE TABLE IF NOT EXISTS dataviews(
-	view_id uuid,
-	name text,
-	predictions set<predictionid>
 );
 
-
-
+CREATE TABLE IF NOT EXISTS dataviews(
+	view_id uuid PRIMARY KEY,
+	name text,
+	predictions set<frozen<predictionid>>
+);
