@@ -164,4 +164,15 @@ Model.findById = function (model_id) {
     }
 };
 
+
+Model.setUploadTime = function (model_id, time) {
+    return {
+        exec: function (callback) {
+            var query = 'update models set millisecondsupload = ? where model_id = ?';
+            client.execute(query, [model_id, time], { prepare: true }, function (err, data) {
+                callback(err, data);
+            });
+        }
+    }
+};
 module.exports = Model;

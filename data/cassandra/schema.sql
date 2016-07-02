@@ -20,22 +20,29 @@ CREATE TABLE IF NOT EXISTS models (
 	name text,
 	inputvars list<text>,
 	outputvar text,
-	millisecondstraining int
+	millisecondstraining int,
 );
 ALTER TABLE models ADD state int;
 ALTER TABLE models ADD trainingResult text;
-
+ALTER TABLE models ADD millisecondsupload int;
+ALTER TABLE models ADD millisecondslastprediction int;
 
 CREATE TABLE IF NOT EXISTS uploads (
 	model_id uuid,
 	upload_id uuid,
-	file text,
 	date timestamp,
 	processed boolean,
 	result text,
 	PRIMARY KEY(model_id, upload_id)
 );
-
+#delete from uploadchunks where model_id = 1447520e-21f9-46f8-8fd1-32fcf6ed8283 and upload_id = 1447520e-21f9-46f8-8fd1-32fcf6ed8283 ;
+CREATE TABLE IF NOT EXISTS uploadchunks (
+	model_id uuid,
+	upload_id uuid,
+	chunk_id uuid,
+	chunk text,
+	PRIMARY KEY((model_id, upload_id), chunk_id)
+);
 
 CREATE TABLE IF NOT EXISTS basicmodelview (
 	model_id uuid PRIMARY KEY,

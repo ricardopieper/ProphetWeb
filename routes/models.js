@@ -68,11 +68,15 @@ router.post('/upload', upload.single('file'), function (req, res, next) {
     console.log(req.file);
     fs.readFile(req.file.path, 'utf8', function(errFile, data){
         if (data){
+
+
+
             var upload = new Upload({
                 model_id: req.body.model_id,
                 file: data
             })
-            upload.save((err)=>{
+            upload.chunkSave((err)=>{
+                
                 if (err) {
                     res.json({ok: false, error: err});
                 }
@@ -82,7 +86,7 @@ router.post('/upload', upload.single('file'), function (req, res, next) {
                     });
                 }
 
-		fs.unlinkSync(req.file.path);	
+                fs.unlinkSync(req.file.path);	
             });
         }else{
             res.json({ok: false, error: errFile});
